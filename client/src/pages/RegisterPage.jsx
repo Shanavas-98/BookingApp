@@ -43,7 +43,7 @@ function RegisterPage() {
                     placeholder="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)} />
-                <button className="primary">Register</button>
+                <button type="submit" className="primary">Register</button>
                 <div className="text-center py-2">
                     Already have an account?
                     <Link to="/login" className="text-blue-500">Login</Link>

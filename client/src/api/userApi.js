@@ -10,5 +10,19 @@ const userInstance = axios.create({
   },
 });
 
+userInstance.interceptors.request.use(
+  (config) => {
+    const userToken = localStorage.getItem('userToken');
+    if(userToken){
+      config.headers.Authorization = `Bearer ${userToken}`;
+    }
+    return config
+  },
+  (error) => {
+    Promise.reject(error);
+  }
+)
+
 export const register = (values) => userInstance.post('/register', values);
 export const login = (values) => userInstance.post('/login', values);
+export const getUser = () => userInstance.get('/auth-user')
