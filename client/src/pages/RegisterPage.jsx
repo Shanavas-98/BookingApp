@@ -9,11 +9,12 @@ function RegisterPage() {
     async function registerUser(e){
         try {
             e.preventDefault();
-            const {data} = await register({
+            const formData = {
                 name,
                 email,
                 password
-            });
+            }
+            const {data} = await register(formData);
             console.log('new user',data);
         } catch (error) {
             console.error(error);

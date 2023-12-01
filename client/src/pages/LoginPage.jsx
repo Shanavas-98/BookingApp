@@ -1,20 +1,23 @@
 // import React from 'react'
 
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { login } from "../api/userApi";
 import { UserContext } from "../context/UserContext";
 function LoginPage() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {setUser} = useContext(UserContext)
   async function loginUser(e){
     try {
       e.preventDefault()
-      const {data} = await login({email,password});
+      const formData={email,password}
+      const {data} = await login(formData);
       localStorage.setItem('userInfo', JSON.stringify(data));
       localStorage.setItem('userToken', data.token);
       setUser(data)
+      navigate('/')
     } catch (error) {
       console.error(error);
     }

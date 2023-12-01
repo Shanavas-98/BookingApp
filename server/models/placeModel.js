@@ -20,14 +20,14 @@ const placeSchema = new mongoose.Schema({
     description:{
         type:String
     },
-    amenities:[{
+    perks:[{
         type:String
     }],
     checkIn: {
-        type:Date
+        type:String
     },
     checkOut:{
-        type:Date
+        type:String
     },
     maxGuest:{
         type:Number
