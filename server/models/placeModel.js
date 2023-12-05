@@ -14,23 +14,49 @@ const placeSchema = new mongoose.Schema({
         type:String,
         requied: true
     },
+    rent:{
+        type:Number,
+        requied:true
+    },
     photos:[{
         type:String
     }],
     description:{
         type:String
     },
+    beds:{
+        type:Number,
+        default:1,
+        required:true
+    },
+    bedrooms:{
+        type:Number,
+        default:1,
+        required: true
+    },
+    bathrooms:{
+        type:Number,
+        default:0,
+        required: true
+    },
+    facilities:[{
+        type:String
+    }],
     perks:[{
         type:String
     }],
     checkIn: {
-        type:String
+        type:String,
+        required: true
     },
     checkOut:{
-        type:String
+        type:String,
+        required: true
     },
-    maxGuest:{
-        type:Number
+    guests:{
+        type:Number,
+        default:1,
+        required: true
     }
 })
 

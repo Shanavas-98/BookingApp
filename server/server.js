@@ -1,10 +1,15 @@
 const express = require('express');
-require('dotenv').config()
-const cors = require('cors');
-const connectDatabase = require('./config/database');
 const app = express();
-const userRoutes = require('./routes/userRoutes')
+const cors = require('cors');
+const dotenv = require('dotenv')
+const connectDatabase = require('./config/database');
+const userRouter = require('./routes/userRoutes');
+const placeRouter = require('./routes/placeRoutes');
 
+//dot env configuration
+dotenv.config()
+
+//database connection
 connectDatabase();
 
 //cross origin connection
@@ -22,7 +27,8 @@ app.use(express.json());
 app.use('/uploads',express.static(__dirname + '/public/uploads'));
 
 //routes
-app.use('/',userRoutes);
+app.use('/',userRouter);
+app.use('/places',placeRouter);
 
 //server
 app.listen(process.env.PORT, (err)=>{

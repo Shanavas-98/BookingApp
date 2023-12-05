@@ -15,9 +15,14 @@ module.exports = async (req, res, next) => {
         if (!user) {
             throw Error('User not exists');
         }
-        req.userId = user?._id;
+        req.userId = user?._id.toString();
         next();
     } catch (error) {
-        console.log("user auth middleware",error);
+        console.log("user auth middleware",error.name);
+        res.status(error.status || 500).json({
+            name: error.name || 'Internal Server Error',
+            message: error.message || 'Something went wrong on the server.',
+            stack: error.stack
+        });
     }
 }

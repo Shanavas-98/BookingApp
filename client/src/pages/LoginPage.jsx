@@ -1,6 +1,6 @@
 // import React from 'react'
 
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "../api/userApi";
 import { UserContext } from "../context/UserContext";
@@ -8,7 +8,7 @@ function LoginPage() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {setUser} = useContext(UserContext)
+  const {user,setUser} = useContext(UserContext)
   async function loginUser(e){
     try {
       e.preventDefault()
@@ -17,11 +17,15 @@ function LoginPage() {
       localStorage.setItem('userInfo', JSON.stringify(data));
       localStorage.setItem('userToken', data.token);
       setUser(data)
-      navigate('/')
     } catch (error) {
       console.error(error);
     }
   }
+  useEffect(()=>{
+    if(user){
+      navigate('/')
+    }
+  },[user,navigate])
   return (
     <div className="m-auto pt-20">
       <h1 className="text-4xl text-center">Login</h1>

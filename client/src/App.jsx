@@ -9,6 +9,8 @@ import ProfileLayout from './layouts/ProfileLayout'
 import BookingsPage from './pages/BookingsPage'
 import PlacesPage from './pages/PlacesPage'
 import AddPlace from './components/AddPlace'
+import SinglePlacePage from './pages/SinglePlacePage'
+import UserAuth from './hooks/UserAuth'
 
 function App() {
   return (
@@ -17,12 +19,16 @@ function App() {
         <Route index element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/account" element={<ProfileLayout />} >
-          <Route index element={<ProfilePage />} />
-          <Route path="bookings" element={<BookingsPage />} />
-          <Route path="places" element={<PlacesPage />} />
-          <Route path="places/add" element={<AddPlace />} />
+        <Route element={<UserAuth />}>
+          <Route path="/account" element={<ProfileLayout />} >
+            <Route index element={<ProfilePage />} />
+            <Route path="bookings" element={<BookingsPage />} />
+            <Route path="places" element={<PlacesPage />} />
+            <Route path="places/add" element={<AddPlace />} />
+            <Route path="places/:placeId" element={<AddPlace />} />
+          </Route>
         </Route>
+        <Route path='/places/:placeId' element={<SinglePlacePage />} />
       </Route>
     </Routes>
   )

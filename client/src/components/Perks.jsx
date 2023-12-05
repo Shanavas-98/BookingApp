@@ -2,7 +2,7 @@
 import { AcUnit, DirectionsCar, Kitchen, Pets } from '@mui/icons-material'
 // import React from 'react'
 
-function PerkItem({ name, text, icon, handlePerks }) {
+function PerkItem({ checked, name, text, icon, handlePerks }) {
     function handleCheck(e) {
         const { checked, name } = e.target;
         console.log(checked, name);
@@ -14,17 +14,18 @@ function PerkItem({ name, text, icon, handlePerks }) {
     }
     return (
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-            <input type="checkbox" name={name} onChange={handleCheck} />
+            <input type="checkbox" checked={checked} name={name} onChange={handleCheck} />
             {icon}
             <span>{text}</span>
         </label>
     )
 }
 
-function Perks({ handlePerks }) {
+function Perks({ selected,handlePerks }) {
     return (
         <div className="grid gap-2 grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
             <PerkItem
+                checked={selected.includes("wifi")}
                 name={"wifi"}
                 text={"Wifi"}
                 icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -32,11 +33,13 @@ function Perks({ handlePerks }) {
                 </svg>}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("parking")}
                 name={"parking"}
                 text={"Free Parking"}
                 icon={<DirectionsCar />}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("tv")}
                 name={"tv"}
                 text={"TV"}
                 icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -44,21 +47,25 @@ function Perks({ handlePerks }) {
                 </svg>}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("pets")}
                 name={"pets"}
                 text={"Pets"}
                 icon={<Pets />}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("ac")}
                 name={"ac"}
                 text={"AC"}
                 icon={<AcUnit />}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("fridge")}
                 name={"fridge"}
                 text={"Refrigerator"}
                 icon={<Kitchen />}
                 handlePerks={handlePerks} />
             <PerkItem
+                checked={selected.includes("camera")}
                 name={"camera"}
                 text={"Security Camera"}
                 icon={<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
