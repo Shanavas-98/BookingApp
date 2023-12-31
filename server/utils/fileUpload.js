@@ -5,7 +5,7 @@ const path = require('path')
 //creating multer instance based on destination folder
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, `public/uploads`);
+        cb(null, "uploads");
     },
     filename: (req, file, cb) => {
         const originalname = path.parse(file.originalname);

@@ -1,13 +1,12 @@
+const dotenv = require('dotenv')
+//dot env configuration
+dotenv.config()
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const dotenv = require('dotenv')
 const connectDatabase = require('./config/database');
 const userRouter = require('./routes/userRoutes');
 const placeRouter = require('./routes/placeRoutes');
-
-//dot env configuration
-dotenv.config()
 
 //database connection
 connectDatabase();
@@ -24,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //static files setup
-app.use('/uploads',express.static(__dirname + '/public/uploads'));
+app.use('/uploads',express.static(__dirname + '/uploads'));
 
 //routes
 app.use('/',userRouter);

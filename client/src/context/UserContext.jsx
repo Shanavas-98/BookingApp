@@ -21,9 +21,9 @@ import { getUser } from "../api/userApi";
             fetchUser()
         }
     },[user])
-    const contextValue = useMemo(()=>({user,setUser}),[user,setUser])
+    const userMemo = useMemo(()=>({user,setUser}),[user,setUser])
     return (
-        <UserContext.Provider value={contextValue}>
+        <UserContext.Provider value={userMemo}>
             {children}
         </UserContext.Provider>
     )

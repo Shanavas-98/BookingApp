@@ -7,7 +7,6 @@ const register = async (req, res) => {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
             throw { status: 400, message: "Every field is required" };
-
         }
         const salt = await bcrypt.genSalt(10);
         const newUser = await UserModel.create({

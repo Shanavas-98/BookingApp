@@ -9,9 +9,11 @@ function PlacesPage() {
     const { data } = await fetchUserPlaces();
     setPlaces(data)
   }
+  
   useEffect(() => {
     getUserPlaces()
   }, [])
+
   return (
     <div>
       <div className="text-end">

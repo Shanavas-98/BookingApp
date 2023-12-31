@@ -22,7 +22,7 @@ const deleteImage = async (req, res) => {
             throw { status: 400, message: 'file name is required' };
         }
         // Specify the path where your images are stored
-        const imagePath = `./public/uploads/${fileName}`;
+        const imagePath = `./uploads/${fileName}`;
         // Check if the file exists
         await fs.access(imagePath);
         // Delete the file
@@ -45,16 +45,24 @@ const deleteImage = async (req, res) => {
 const addPlace = async (req, res) => {
     try {
         const userId = req.userId
-        const { title, address, rent, uploaded,
-            description, beds, bedrooms,
+        const { title, building, locality, street,
+            town, district, state, pincode, rent, uploaded,
+            cover,description, beds, bedrooms,
             bathrooms, facilities, perks,
             checkin, checkout, guests } = req.body;
         const newPlace = await PlaceModel.create({
             owner: userId,
             title: title,
-            address: address,
+            building: building, 
+            locality: locality, 
+            street: street,
+            town: town, 
+            district: district, 
+            state: state, 
+            pincode: pincode,
             rent: rent,
             photos: uploaded,
+            cover: cover || uploaded[0],
             description: description,
             beds: beds,
             bedrooms: bedrooms,
@@ -83,8 +91,9 @@ const editPlace = async (req, res) => {
         if(!placeId){
             throw { status: 400, message: 'place id is required' };
         }
-        const { title, address, rent, uploaded,
-            description, beds, bedrooms,
+        const { title, building, locality, street,
+            town, district, state, pincode, rent, uploaded,
+            cover, description, beds, bedrooms,
             bathrooms, facilities, perks,
             checkin, checkout, guests } = req.body;
         if(!title || !address || !rent || !checkin || !checkout){
@@ -97,9 +106,16 @@ const editPlace = async (req, res) => {
         const editedPlace = await placeDoc.set(
         {
             title: title,
-            address: address,
+            building: building, 
+            locality: locality, 
+            street: street,
+            town: town, 
+            district: district, 
+            state: state, 
+            pincode: pincode,
             rent: rent,
             photos: uploaded,
+            cover: cover,
             description: description,
             beds: beds,
             bedrooms: bedrooms,
@@ -140,7 +156,6 @@ const getUserPlaces = async (req, res) => {
 const getPlace = async (req,res)=>{
     try {
         const placeId = req.params.placeId;
-        console.log(placeId);
         const place = await PlaceModel.findById(placeId)
         res.status(200).json(place)
     } catch (error) {

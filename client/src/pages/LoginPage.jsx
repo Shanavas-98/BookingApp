@@ -27,9 +27,9 @@ function LoginPage() {
     }
   },[user,navigate])
   return (
-    <div className="m-auto pt-20">
+    <div className="max-w-xl m-auto pt-20">
       <h1 className="text-4xl text-center">Login</h1>
-      <form onSubmit={loginUser} className="max-w-xl mx-auto border border-gray-500">
+      <form onSubmit={loginUser} className="max-w-xl mx-auto">
         <input
           type="email"
           name="email"
@@ -43,11 +43,11 @@ function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)} />
         <button type="submit" className="primary">Login</button>
+      </form>
         <div className="text-center py-2">
           Don&apos;t have an account?
           <Link to="/register" className="text-blue-500">Register Now</Link>
         </div>
-      </form>
     </div>
   )
 }

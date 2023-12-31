@@ -10,13 +10,33 @@ const placeSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    address:{
-        type:String,
-        requied: true
+    building:{
+        type:String
+    },
+    locality:{
+        type:String
+    },
+    street:{
+        type:String
+    },
+    town:{
+        type:String
+    },
+    district:{
+        type:String
+    },
+    state:{
+        type:String
+    },
+    pincode:{
+        type:Number
     },
     rent:{
         type:Number,
         requied:true
+    },
+    cover:{
+        type:String
     },
     photos:[{
         type:String
@@ -58,6 +78,8 @@ const placeSchema = new mongoose.Schema({
         default:1,
         required: true
     }
+},{
+    timestamps:true
 })
 
 const PlaceModel = mongoose.model('place', placeSchema);

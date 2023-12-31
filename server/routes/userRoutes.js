@@ -3,7 +3,7 @@ const userRouter = express.Router();
 const { register, login, authUser } =  require('../controllers/userControllers');
 const upload = require('../utils/fileUpload');
 const userAuth = require('../middlewares/userAuth');
-const { uploadImages, deleteImage, getUserPlaces, getPlace } = require('../controllers/placeControllers');
+const { uploadImages, deleteImage, getUserPlaces, getPlace, setCover } = require('../controllers/placeControllers');
 
 userRouter.post('/register', register )
 userRouter.post('/login', login)

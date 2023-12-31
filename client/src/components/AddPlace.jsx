@@ -1,19 +1,27 @@
+// import ReactDOM from 'react-dom'
 import { useEffect, useState } from "react"
 import ImageUpload from "./ImageUpload"
 import { addNewPlace, editPlace, fetchPlaceData } from "../api/userApi";
 import Perks from "./Perks";
 import { useNavigate, useParams } from "react-router-dom";
 import Facilities from "./Facilities";
+import ErrorPage from "../pages/ErrorPage";
 
 function AddPlace() {
     const navigate = useNavigate();
     //all the states required for each input box
-    const {placeId} = useParams(); 
+    const { placeId } = useParams();
     const [title, setTitle] = useState('')
-    const [address, setAddress] = useState('')
+    const [building, setBuilding] = useState('')
+    const [locality, setLocality] = useState('')
+    const [street, setStreet] = useState('')
+    const [town, setTown] = useState('')
+    const [district, setDistrict] = useState('')
+    const [state, setState] = useState('')
+    const [pincode, setPincode] = useState('')
     const [rent, setRent] = useState('')
-    // const [link, setLink] = useState('')
     const [uploaded, setUploaded] = useState([]);
+    const [cover, setCover] = useState('');
     const [description, setDescription] = useState('')
     const [beds, setBeds] = useState(1)
     const [bedrooms, setBedrooms] = useState(1)
@@ -24,12 +32,19 @@ function AddPlace() {
     const [checkout, setCheckout] = useState('')
     const [guests, setGuests] = useState(1)
     // api call to fetch place data
-    async function getPlace(id){
-        const {data} = await fetchPlaceData(id);
+    async function getPlace(id) {
+        const { data } = await fetchPlaceData(id);
         setTitle(data.title);
-        setAddress(data.address);
+        setBuilding(data.building);
+        setLocality(data.locality);
+        setStreet(data.street);
+        setTown(data.town);
+        setDistrict(data.district);
+        setState(data.state);
+        setPincode(data.pincode);
         setRent(data.rent);
         setUploaded(data.photos);
+        setCover(data.cover)
         setDescription(data.description);
         setBeds(data.beds);
         setBedrooms(data.bedrooms);
@@ -41,28 +56,29 @@ function AddPlace() {
         setGuests(data.guests);
     }
     //use effect function for calling the function on page load
-    useEffect(()=>{
-        if(!placeId){
+    useEffect(() => {
+        if (!placeId) {
             return;
-        }else{
+        } else {
             getPlace(placeId);
         }
-    },[placeId])
+    }, [placeId])
     //add and update place form submission
     async function handleSubmit(e) {
         try {
             e.preventDefault();
             const formData = {
-                title, address, rent, uploaded,
-                description, facilities, beds,
-                bedrooms, bathrooms, perks,
-                checkin, checkout, guests
+                title, building, locality, street,
+                town, district, state, pincode,
+                rent, uploaded, cover, description,
+                facilities, beds, bedrooms, bathrooms,
+                perks, checkin, checkout, guests
             }
-            if(placeId){
+            if (placeId) {
                 //update place api
-                const {data} = await editPlace(placeId,formData);
+                const { data } = await editPlace(placeId, formData);
                 console.log(data);
-            }else{
+            } else {
                 //add place api
                 const { data } = await addNewPlace(formData);
                 console.log(data);
@@ -72,6 +88,10 @@ function AddPlace() {
         } catch (error) {
             //print error on form submission
             console.error(error);
+            const root = document.getElementById('root');
+
+            const rootElement = root.createRoot();
+            rootElement.render(<ErrorPage error={error} />);
         }
     }
     //input header and label component
@@ -92,22 +112,54 @@ function AddPlace() {
                 {inputHeader('Title', 'Title of your accommodation,should be short and catchy')}
                 <input type="text"
                     name="title"
-                    placeholder="Skyline"
+                    placeholder="Title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)} />
                 {inputHeader('Address', 'exact location of your accommodation')}
-                <textarea type="text"
-                    name="address"
-                    placeholder="Flatno.123,Street,City"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}></textarea>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    <input type="text"
+                        name="building"
+                        placeholder="Flat/Building"
+                        value={building}
+                        onChange={(e) => setBuilding(e.target.value)} />
+                    <input type="text"
+                        name="locality"
+                        placeholder="Locality"
+                        value={locality}
+                        onChange={(e) => setLocality(e.target.value)} />
+                    <input type="text"
+                        name="street"
+                        placeholder="Street/Area"
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)} />
+                    <input type="text"
+                        name="town"
+                        placeholder="Town/City"
+                        value={town}
+                        onChange={(e) => setTown(e.target.value)} />
+                    <input type="text"
+                        name="district"
+                        placeholder="District"
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)} />
+                    <input type="text"
+                        name="state"
+                        placeholder="State"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)} />
+                    <input type="number"
+                        name="pincode"
+                        placeholder="Pincode"
+                        value={pincode}
+                        onChange={(e) => setPincode(e.target.value)} />
+                </div>
                 {inputHeader('Rent', 'rent charged per night')}
                 <input type="text"
                     name="rent"
                     placeholder="&#x20B9;1000"
                     value={rent}
                     onChange={(e) => setRent(e.target.value)} />
-                {inputHeader('Add Photos', 'More it&apos;s better')}
+                {inputHeader("Add Photos", "More it's better")}
                 {/* <div className="flex">
                     <input type="text"
                         name="link"
@@ -116,7 +168,7 @@ function AddPlace() {
                         onChange={(e) => setLink(e.target.value)} />
                     <button>Add Photo</button>
                 </div> */}
-                <ImageUpload uploaded={uploaded} setUploaded={setUploaded} />
+                <ImageUpload uploaded={uploaded} setUploaded={setUploaded} cover={cover} setCover={setCover} />
                 {inputHeader('Describe', 'Briefly describe your accommodation and facilities')}
                 <textarea type="text"
                     name="description"

@@ -11,6 +11,7 @@ import PlacesPage from './pages/PlacesPage'
 import AddPlace from './components/AddPlace'
 import SinglePlacePage from './pages/SinglePlacePage'
 import UserAuth from './hooks/UserAuth'
+import NotFoundPage from './pages/NotFoundPage'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         </Route>
         <Route path='/places/:placeId' element={<SinglePlacePage />} />
       </Route>
+      <Route path="/*" element={< NotFoundPage />} />
     </Routes>
   )
 }
